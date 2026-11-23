@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<!-- BEFORE: this page contains deliberate accessibility barriers for the case study. Do not copy these patterns. -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; background: #fff; color: #333; }
+    * { outline: none; }
+    .top { background: #4a90d9; color: #fff; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 22px; font-weight: bold; }
+    .menu span { margin-left: 18px; cursor: pointer; color: #dbe9f8; }
+    .banner { background: #f5f5f5; padding: 26px 24px; font-size: 20px; color: #aaa; min-height: 30px; }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 24px; }
+    .big { font-size: 28px; font-weight: bold; margin: 10px 0; }
+    .medium { font-size: 20px; font-weight: bold; margin: 18px 0 8px; }
+    .light { color: #b5b5b5; font-size: 14px; }
+    .cards { display: flex; gap: 20px; flex-wrap: wrap; }
+    .card { flex: 1 1 260px; border: 1px solid #eee; border-radius: 8px; overflow: hidden; }
+    .card img { width: 100%; display: block; }
+    .card .inner { padding: 14px; }
+    .btn { display: inline-block; background: #7fb6ef; color: #fff; padding: 8px 14px; border-radius: 4px; cursor: pointer; margin-top: 8px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 8px; }
+    td { border: 1px solid #ddd; padding: 8px; }
+    .bold-row td { font-weight: bold; background: #fafafa; }
+    input { padding: 8px; border: 1px solid #ddd; margin: 6px 0; width: 100%; box-sizing: border-box; }
+    .error { border-color: #e33; }
+    .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); }
+    .modal { background: #fff; max-width: 420px; margin: 12vh auto; padding: 20px; border-radius: 8px; }
+    .x { float: right; cursor: pointer; font-size: 20px; color: #999; }
+    .footer { background: #f5f5f5; padding: 16px 24px; margin-top: 30px; font-size: 13px; color: #aaa; }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div class="logo">Maple Grove Library</div>
+    <div class="menu">
+      <span onclick="location.href='#events'">Events</span>
+      <span onclick="location.href='#hours'">Hours</span>
+      <span onclick="location.href='#signup'">Newsletter</span>
+    </div>
+  </div>
+
+  <div class="banner" id="banner">Winter reading challenge starts December 1!</div>
+
+  <div class="wrap">
+    <div class="big">Upcoming events</div>
+    <div class="light">Free and open to everyone. Registration required for some events.</div>
+
+    <div class="cards" id="events">
+      <div class="card">
+        <img src="../assets/reading-room.svg">
+        <div class="inner">
+          <div class="medium">Book Club: Winter Reads</div>
+          <div class="light">Thursday, Dec 10 · 6:30 PM · Reading Room</div>
+          <div class="btn" onclick="openModal('Book Club: Winter Reads')">Register</div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="../assets/kids-coding.svg">
+        <div class="inner">
+          <div class="medium">Kids Coding Club (ages 9–12)</div>
+          <div class="light">Saturday, Dec 12 · 10:00 AM · Computer Lab</div>
+          <div class="btn" onclick="openModal('Kids Coding Club')">Register</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="medium" id="hours">Opening hours</div>
+    <table>
+      <tr class="bold-row"><td>Day</td><td>Opens</td><td>Closes</td></tr>
+      <tr><td>Monday – Thursday</td><td>9:00 AM</td><td>8:00 PM</td></tr>
+      <tr><td>Friday</td><td>9:00 AM</td><td>6:00 PM</td></tr>
+      <tr><td>Saturday</td><td>10:00 AM</td><td>4:00 PM</td></tr>
+      <tr><td>Sunday</td><td>Closed</td><td>Closed</td></tr>
+    </table>
+    <p>For holiday closures, <a href="#">click here</a>.</p>
+
+    <div class="medium" id="signup">Get our newsletter</div>
+    <form id="news" onsubmit="return checkForm()">
+      <input id="email" placeholder="Email address">
+      <div id="msg" class="light"></div>
+      <div class="btn" onclick="checkForm()">Subscribe</div>
+    </form>
+  </div>
+
+  <div class="footer">© 2026 Maple Grove Public Library · 120 Elm Street</div>
+
+  <div class="modal-bg" id="modal">
+    <div class="modal">
+      <span class="x" onclick="closeModal()">×</span>
+      <div class="medium" id="modal-title">Register</div>
+      <input placeholder="Full name">
+      <input placeholder="Phone">
+      <div class="btn" onclick="closeModal()">Confirm</div>
+    </div>
+  </div>
+
+  <script>
+    // Auto-rotating banner with no way to pause it.
+    const messages = [
+      'Winter reading challenge starts December 1!',
+      'New: free museum passes with your library card.',
+      'Holiday hours: closed December 24–25.',
+    ];
+    let i = 0;
+    setInterval(() => {
+      i = (i + 1) % messages.length;
+      document.getElementById('banner').textContent = messages[i];
+    }, 3000);
+
+    function openModal(title) {
+      document.getElementById('modal-title').textContent = 'Register: ' + title;
+      document.getElementById('modal').style.display = 'block';
+    }
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+    function checkForm() {
+      const email = document.getElementById('email');
+      const msg = document.getElementById('msg');
+      if (!email.value.includes('@')) {
+        email.classList.add('error'); // Error shown only by a red border.
+        msg.textContent = '';
+      } else {
+        email.classList.remove('error');
+        msg.textContent = 'Thanks for subscribing!';
+      }
+      return false;
+    }
+  </script>
+</body>
+</html>

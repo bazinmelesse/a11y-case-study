@@ -1,0 +1,10 @@
+Check                                                BEFORE  AFTER
+First Tab reaches a skip link                        FAIL    PASS
+Register button reachable with Tab                   FAIL    PASS
+Opening the dialog moves focus into it               FAIL    PASS
+Escape closes it and returns focus to the button     FAIL    PASS
+Bad email: field marked invalid for screen readers   FAIL    PASS
+Bad email: error explained in text (not color only)  FAIL    PASS
+Email field has a visible label                      FAIL    PASS
+Rotating banner has a pause control                  FAIL    PASS
+Focus outline is visible                             FAIL    PASS

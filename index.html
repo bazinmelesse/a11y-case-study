@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Accessibility Case Study: Before and After</title>
+  <style>
+    body { margin: 0; font: 17px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2933; background: #f7f9fb; }
+    main { max-width: 760px; margin: 0 auto; padding: 3rem 1.25rem; }
+    h1 { line-height: 1.2; margin: 0 0 .5rem; }
+    p { margin: 0 0 1rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .card { background: #fff; border: 1px solid #d9e2ec; border-radius: 10px; padding: 1.25rem; }
+    .card h2 { margin: 0 0 .25rem; font-size: 1.2rem; }
+    .stat { font-size: 2rem; font-weight: 700; margin: .25rem 0; }
+    a { color: #1a4f8b; }
+    a:focus-visible { outline: 3px solid #1a4f8b; outline-offset: 3px; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Accessibility case study: before and after</h1>
+  <p>The same library web page, audited against WCAG 2.1 AA (Section 508) and fixed. Try both with only your keyboard: Tab, Enter and Escape.</p>
+  <div class="grid">
+    <section class="card" aria-labelledby="before-h">
+      <h2 id="before-h">Before</h2>
+      <p class="stat">15 barriers</p>
+      <p>7 automated failures, 0 of 9 keyboard checks passed.</p>
+      <p><a href="before/index.html">Open the before page</a></p>
+    </section>
+    <section class="card" aria-labelledby="after-h">
+      <h2 id="after-h">After</h2>
+      <p class="stat">0 barriers</p>
+      <p>0 automated failures, 9 of 9 keyboard checks passed.</p>
+      <p><a href="after/index.html">Open the after page</a></p>
+    </section>
+  </div>
+  <p><a href="README.md">Full write-up with every finding and fix</a></p>
+</main>
+</body>
+</html>

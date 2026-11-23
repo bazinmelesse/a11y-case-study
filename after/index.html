@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<!-- AFTER: the same page with every barrier from the audit fixed. Comments mark each fix. -->
+<html lang="en"> <!-- Fix 1: page language for screen readers (WCAG 3.1.1) -->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Events and Hours | Maple Grove Library</title> <!-- Fix 2: descriptive page title (2.4.2) -->
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; background: #fff; color: #222; line-height: 1.5; }
+
+    /* Fix 3: a clear, visible keyboard focus indicator (2.4.7) instead of outline: none. */
+    :focus-visible { outline: 3px solid #1a4f8b; outline-offset: 3px; }
+
+    .skip { position: absolute; left: 8px; top: -60px; background: #fff; color: #1a4f8b; padding: 8px 12px; border: 2px solid #1a4f8b; z-index: 10; }
+    .skip:focus { top: 8px; }
+
+    /* Fix 4: colors chosen to meet contrast minimums (1.4.3). */
+    .top { background: #1a4f8b; color: #fff; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .logo { font-size: 22px; font-weight: bold; margin: 0; }
+    .top nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 18px; }
+    .top nav a { color: #fff; }
+    .top nav a:focus-visible { outline-color: #fff; }
+
+    .banner { background: #f1f4f8; padding: 18px 24px; display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+    .banner p { margin: 0; font-size: 20px; color: #333; }
+
+    main { max-width: 900px; margin: 0 auto; padding: 24px; }
+    h1 { font-size: 28px; margin: 10px 0 4px; }
+    h2 { font-size: 22px; margin: 32px 0 8px; }
+    .card-title { font-size: 19px; margin: 0 0 4px; }
+    .muted { color: #555; font-size: 15px; margin: 0; }
+
+    .cards { display: flex; gap: 20px; flex-wrap: wrap; list-style: none; padding: 0; margin: 16px 0 0; }
+    .card { flex: 1 1 260px; border: 1px solid #ccd3dc; border-radius: 8px; overflow: hidden; }
+    .card img { width: 100%; display: block; }
+    .card .inner { padding: 14px; }
+
+    button, .btn { font: inherit; background: #1a4f8b; color: #fff; padding: 8px 14px; border: 0; border-radius: 4px; cursor: pointer; margin-top: 8px; }
+    button.secondary { background: #fff; color: #1a4f8b; border: 2px solid #1a4f8b; margin: 0; }
+
+    table { border-collapse: collapse; width: 100%; margin-top: 8px; }
+    caption { text-align: left; color: #555; padding-bottom: 6px; }
+    th, td { border: 1px solid #bfc7d1; padding: 8px; text-align: left; }
+    thead th { background: #f1f4f8; }
+
+    label { display: block; font-weight: bold; margin-top: 10px; }
+    input { font: inherit; padding: 8px; border: 1px solid #6b7785; margin: 4px 0; width: 100%; box-sizing: border-box; }
+    input[aria-invalid="true"] { border: 2px solid #b3261e; }
+    .error-text { color: #b3261e; font-weight: bold; margin: 2px 0 0; }
+    .success-text { color: #1e6b34; font-weight: bold; }
+
+    dialog { max-width: 420px; width: calc(100% - 32px); border: 0; border-radius: 8px; padding: 20px; }
+    dialog::backdrop { background: rgba(0,0,0,.5); }
+    .dialog-head { display: flex; justify-content: space-between; align-items: start; gap: 12px; }
+    .close { background: none; color: #333; font-size: 24px; line-height: 1; padding: 4px 8px; margin: 0; }
+
+    footer { background: #f1f4f8; padding: 16px 24px; margin-top: 30px; font-size: 14px; color: #444; }
+
+    /* Respect users who ask for less motion. */
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <!-- Fix 5: skip link so keyboard users can jump past the header (2.4.1). -->
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <!-- Fix 6: real landmarks (header, nav, main, footer) instead of anonymous divs (1.3.1). -->
+  <header class="top">
+    <p class="logo">Maple Grove Library</p>
+    <nav aria-label="Main">
+      <!-- Fix 7: real links instead of clickable spans, so they work with a keyboard (2.1.1, 4.1.2). -->
+      <ul>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#hours">Hours</a></li>
+        <li><a href="#signup">Newsletter</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Fix 8: the rotating banner can be paused, and doesn't rotate at all for reduced-motion users (2.2.2). -->
+  <section class="banner" aria-label="Announcements">
+    <p id="banner">Winter reading challenge starts December 1!</p>
+    <button type="button" class="secondary" id="banner-toggle" aria-pressed="false">Pause announcements</button>
+  </section>
+
+  <main id="main">
+    <!-- Fix 9: real headings in order (h1, then h2 sections) instead of styled divs (1.3.1, 2.4.6). -->
+    <h1>Upcoming events</h1>
+    <p class="muted">Free and open to everyone. Registration required for some events.</p>
+
+    <ul class="cards" id="events">
+      <li class="card">
+        <!-- Fix 10: text alternatives for images (1.1.1). -->
+        <img src="../assets/reading-room.svg" alt="Illustration of the library reading room with bookshelves and a table">
+        <div class="inner">
+          <h2 class="card-title">Book Club: Winter Reads</h2>
+          <p class="muted">Thursday, Dec 10 · 6:30 PM · Reading Room</p>
+          <!-- Fix 11: a real button with a name that says what it registers for (2.4.6, 4.1.2). -->
+          <button type="button" data-event="Book Club: Winter Reads">Register<span class="visually-hidden"> for Book Club: Winter Reads</span></button>
+        </div>
+      </li>
+      <li class="card">
+        <img src="../assets/kids-coding.svg" alt="Illustration of a laptop screen showing simple Python code">
+        <div class="inner">
+          <h2 class="card-title">Kids Coding Club (ages 9–12)</h2>
+          <p class="muted">Saturday, Dec 12 · 10:00 AM · Computer Lab</p>
+          <button type="button" data-event="Kids Coding Club">Register<span class="visually-hidden"> for Kids Coding Club</span></button>
+        </div>
+      </li>
+    </ul>
+
+    <h2 id="hours">Opening hours</h2>
+    <!-- Fix 12: a data table with a caption and header cells (1.3.1). -->
+    <table>
+      <caption>Regular opening hours</caption>
+      <thead>
+        <tr><th scope="col">Day</th><th scope="col">Opens</th><th scope="col">Closes</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Monday – Thursday</th><td>9:00 AM</td><td>8:00 PM</td></tr>
+        <tr><th scope="row">Friday</th><td>9:00 AM</td><td>6:00 PM</td></tr>
+        <tr><th scope="row">Saturday</th><td>10:00 AM</td><td>4:00 PM</td></tr>
+        <tr><th scope="row">Sunday</th><td colspan="2">Closed</td></tr>
+      </tbody>
+    </table>
+    <!-- Fix 13: link text that makes sense on its own (2.4.4). -->
+    <p><a href="#holiday-closures">See holiday closures</a></p>
+
+    <h2 id="signup">Get our newsletter</h2>
+    <!-- Fix 14: a visible label, a real submit button, and an error message in text (1.3.1, 3.3.1, 3.3.2, 1.4.1). -->
+    <form id="news" novalidate>
+      <label for="email">Email address</label>
+      <input id="email" name="email" type="email" autocomplete="email" aria-describedby="email-error">
+      <p id="email-error" class="error-text" hidden>Enter an email address in the format name@example.com.</p>
+      <button type="submit">Subscribe</button>
+      <p id="news-status" role="status" class="success-text"></p>
+    </form>
+  </main>
+
+  <footer>© 2026 Maple Grove Public Library · 120 Elm Street</footer>
+
+  <!-- Fix 15: a native <dialog>, which traps focus, closes with Escape, and is announced as a dialog (2.4.3, 4.1.2). -->
+  <dialog id="register" aria-labelledby="register-title">
+    <form method="dialog" id="register-form">
+      <div class="dialog-head">
+        <h2 id="register-title" style="margin:0">Register</h2>
+        <button type="submit" class="close" value="cancel" aria-label="Close" formnovalidate>×</button>
+      </div>
+      <label for="reg-name">Full name</label>
+      <input id="reg-name" name="name" autocomplete="name" required>
+      <label for="reg-phone">Phone</label>
+      <input id="reg-phone" name="phone" type="tel" autocomplete="tel" required>
+      <button type="submit" value="confirm">Confirm registration</button>
+    </form>
+  </dialog>
+
+  <style>.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }</style>
+
+  <script>
+    // --- Rotating banner (Fix 8) ---
+    const messages = [
+      'Winter reading challenge starts December 1!',
+      'New: free museum passes with your library card.',
+      'Holiday hours: closed December 24–25.',
+    ];
+    const banner = document.getElementById('banner');
+    const toggle = document.getElementById('banner-toggle');
+    let index = 0;
+    let timer = null;
+
+    function start() {
+      timer = setInterval(() => {
+        index = (index + 1) % messages.length;
+        banner.textContent = messages[index];
+      }, 5000);
+      toggle.textContent = 'Pause announcements';
+      toggle.setAttribute('aria-pressed', 'false');
+    }
+    function stop() {
+      clearInterval(timer);
+      timer = null;
+      toggle.textContent = 'Play announcements';
+      toggle.setAttribute('aria-pressed', 'true');
+    }
+    toggle.addEventListener('click', () => (timer ? stop() : start()));
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) stop(); else start();
+
+    // --- Registration dialog (Fix 15) ---
+    const dialog = document.getElementById('register');
+    const title = document.getElementById('register-title');
+    let opener = null;
+
+    document.querySelectorAll('[data-event]').forEach((button) => {
+      button.addEventListener('click', () => {
+        opener = button;
+        title.textContent = 'Register: ' + button.dataset.event;
+        dialog.showModal(); // Moves focus into the dialog and makes the page behind it inert.
+      });
+    });
+    // When the dialog closes (button or Escape), return focus to the button that opened it.
+    dialog.addEventListener('close', () => {
+      if (opener) opener.focus();
+      document.getElementById('register-form').reset();
+    });
+
+    // --- Newsletter form (Fix 14) ---
+    const form = document.getElementById('news');
+    const email = document.getElementById('email');
+    const error = document.getElementById('email-error');
+    const status = document.getElementById('news-status');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      status.textContent = '';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+        email.setAttribute('aria-invalid', 'true'); // Screen readers announce the field as invalid…
+        error.hidden = false;                        // …and read the message linked by aria-describedby.
+        email.focus();                               // Put the user right where the problem is.
+        return;
+      }
+      email.removeAttribute('aria-invalid');
+      error.hidden = true;
+      status.textContent = 'Thanks for subscribing!'; // role="status" announces this politely.
+      form.reset();
+    });
+  </script>
+</body>
+</html>

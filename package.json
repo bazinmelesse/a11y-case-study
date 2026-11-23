@@ -1,0 +1,18 @@
+{
+  "name": "a11y-case-study",
+  "version": "1.0.0",
+  "description": "WCAG 2.1 AA / Section 508 accessibility audit: before and after",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "audit": "python scripts/audit.py",
+    "test:keyboard": "python scripts/keyboard_test.py"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "axe-core": "^4.14.1"
+  }
+}
